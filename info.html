@@ -12,13 +12,30 @@
     .card {
       margin: 20px;
     }
+    .car {
+      color: #fff;
+      background-color: #4b5cc4;
+      border-radius: 6px;
+      border: 1px solid #fff;
+      text-align: center;
+      padding: 10px 0;
+      box-shadow: 0 0 2px 4px #4b5cc4;
+      width: 90%;
+      margin: 15px auto;
+      font-size: 40px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+  }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div id="cardContainer"></div>
+        <div class="car" style="background: rgb(75, 92, 196); box-shadow: rgb(75, 92, 196) 0px 0px 2px 4px; color: rgb(255, 255, 255);">
+          <span class="car-province">京</span><span class="car-letter">A</span><span class="car-dot">•</span><span class="car-number">12345</span>
+      </div>
+       <div id="cardContainer"></div>
       </div>
     </div>
   </div>
@@ -28,6 +45,18 @@
     const urlParams = new URLSearchParams(window.location.search);
     const plateNumber = urlParams.get('plateNumber');
     const phoneNumber = urlParams.get('phoneNumber');
+
+ // 找到显示车牌号的各个元素
+ const carProvince = document.querySelector('.car-province');
+ const carLetter = document.querySelector('.car-letter');
+ const carNumber = document.querySelector('.car-number');
+
+ // 将从 URL 中获取到的车牌号填充到相应的位置
+ if (plateNumber) {
+     carProvince.textContent = plateNumber.charAt(0); // 假设第一个字符为省份
+     carLetter.textContent = plateNumber.charAt(1); // 假设第二个字符为字母
+     carNumber.textContent = plateNumber.slice(2); // 从第三个字符开始为数字
+ }
 
     // 生成卡片内容
     const cardContent = `
