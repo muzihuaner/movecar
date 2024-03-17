@@ -1,0 +1,58 @@
+<!-- http://127.0.0.1:5500/index.html?plateNumber=%E8%BD%A6%E7%89%8C%E5%8F%B7&phoneNumber=%E6%89%8B%E6%9C%BA%E5%8F%B7 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>挪车-信息</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://jsd.quickso.cn/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .card {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div id="cardContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 从 URL 中获取车牌号和手机号
+    const urlParams = new URLSearchParams(window.location.search);
+    const plateNumber = urlParams.get('plateNumber');
+    const phoneNumber = urlParams.get('phoneNumber');
+
+    // 生成卡片内容
+    const cardContent = `
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title">挪车信息</h1>
+          <h2 class="card-text">临时停靠，请多关照</p>
+          <p class="card-text">车牌号: ${plateNumber}</p>
+          <p class="card-text">联系电话: ${phoneNumber}</p>
+          <button type="button" class="btn btn-primary" onclick="callNumber('${phoneNumber}')">一键呼叫</button>
+        </div>
+      </div>
+    `;
+
+    // 将卡片添加到页面中
+    const cardContainer = document.getElementById('cardContainer');
+    cardContainer.innerHTML = cardContent;
+
+    // 一键呼叫函数
+    function callNumber(phoneNumber) {
+      window.location.href = 'tel:' + phoneNumber;
+    }
+  </script>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://jsd.quickso.cn/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
