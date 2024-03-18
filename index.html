@@ -56,53 +56,48 @@
     
   </div>
   
-  <script>
-    document.getElementById('plateNumber').addEventListener('input', function() {
-      var plateNumber = this.value.trim();
-      var plateNumberError = document.getElementById('plateNumberError');
-      var plateNumberRegex = /^([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[a-zA-Z](([DF]((?![IO])[a-zA-Z0-9](?![IO]))[0-9]{4})|([0-9]{5}[DF]))|[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1})$/; // 车牌号正则表达式
-      if (!plateNumberRegex.test(plateNumber)) {
-          plateNumberError.textContent = '请输入正确的车牌号';
-      } else {
-          plateNumberError.textContent = '';
-      }
-  });
-  
-  document.getElementById('phoneNumber').addEventListener('input', function() {
-      var phoneNumber = this.value.trim();
-      var phoneNumberError = document.getElementById('phoneNumberError');
-      var phoneNumberRegex = /^1\d{10}$/; // 手机号正则表达式
-      if (!phoneNumberRegex.test(phoneNumber)) {
-          phoneNumberError.textContent = '请输入正确的手机号';
-      } else {
-          phoneNumberError.textContent = '';
-      }
-  });
+  <script>document.getElementById('inputForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
+    var plateNumber = document.getElementById('plateNumber').value.trim();
+    var phoneNumber = document.getElementById('phoneNumber').value.trim();
+    var plateNumberError = document.getElementById('plateNumberError');
+    var phoneNumberError = document.getElementById('phoneNumberError');
+    var plateNumberRegex = /^([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[a-zA-Z](([DF]((?![IO])[a-zA-Z0-9](?![IO]))[0-9]{4})|([0-9]{5}[DF]))|[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1})$/; // 车牌号正则表达式
+    var phoneNumberRegex = /^1\d{10}$/; // 手机号正则表达式
 
+    // Validate plate number
+    if (!plateNumberRegex.test(plateNumber)) {
+        plateNumberError.textContent = '请输入正确的车牌号';
+        return; // Stop further execution if plate number is invalid
+    } else {
+        plateNumberError.textContent = '';
+    }
 
-    document.getElementById('inputForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var plateNumber = document.getElementById('plateNumber').value;
-      var phoneNumber = document.getElementById('phoneNumber').value;
+    // Validate phone number
+    if (!phoneNumberRegex.test(phoneNumber)) {
+        phoneNumberError.textContent = '请输入正确的手机号';
+        return; // Stop further execution if phone number is invalid
+    } else {
+        phoneNumberError.textContent = '';
+    }
 
-      // Constructing the URL with parameters
-      var url = 'https://movecar.quickso.cn/info.html?plateNumber=' + encodeURIComponent(plateNumber) + '&phoneNumber=' + encodeURIComponent(phoneNumber);
-      //console.log(url)
-      var link = document.getElementById("previewLink");
+    // Constructing the URL with parameters
+    var url = 'https://movecar.quickso.cn/info.html?plateNumber=' + encodeURIComponent(plateNumber) + '&phoneNumber=' + encodeURIComponent(phoneNumber);
+    var link = document.getElementById("previewLink");
 
-        // 将 URL 赋值给 <a> 标签的 href 属性
-        link.href = url;
-        link.style.display = 'inline'; // 显示链接
-      // Generating QR Code
-      var qrCodeDiv = document.getElementById('qrcode');
-      qrCodeDiv.innerHTML = ""; // Clear previous content
-      var qrCode = new QRCode(qrCodeDiv, {
+    // Set URL to the <a> tag's href attribute
+    link.href = url;
+    link.style.display = 'inline'; // Show the link
+
+    // Generating QR Code
+    var qrCodeDiv = document.getElementById('qrcode');
+    qrCodeDiv.innerHTML = ""; // Clear previous content
+    var qrCode = new QRCode(qrCodeDiv, {
         text: url,
         width: 200,
         height: 200,
-      });
-
+    });
       // Convert card content to image
       convertCardToImage();
     });
